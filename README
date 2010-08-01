@@ -1,0 +1,14 @@
+wikileaks_analysis.R
+
+Purpose:    Code in support of statistical analysis of the WikiLeaks Afghanistan data disclosure
+
+            The data is not available for download via this repository. If interested in duplicating
+            the results you must download the data from WikiLeaks independently.
+
+Author:     Drew Conway
+Email:      drew.conway@nyu.edu
+Date:       2010-08-01
+
+Copyright (c) 2010, under the Simplified BSD License.
+For more information on FreeBSD see: http://www.opensource.org/licenses/bsd-license.php
+All rights reserved.
