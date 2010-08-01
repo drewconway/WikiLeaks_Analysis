@@ -67,7 +67,7 @@ week.count<-cbind(table(cbind(format.Date(afg$DateOccurred,"%Y %W"))))
 # Function for pulling out leading digit from some integer stored as string
 leading.dig<-function(x) {
     as.numeric(strsplit(as.character(x),"")[[1]][1])
-}
+}   
 
 # Count digits and store as data frame
 dig.count<-cbind(table(sapply(as.vector(week.count),leading.dig)))
@@ -75,7 +75,7 @@ dig.count<-as.data.frame(dig.count)
 colnames(dig.count)<-"DigitCount"
 
 # Benford's distribution
-dbenford<-function(d,base) {
+dbenford<-function(d,base=10) {
     return(log(1+(1/d),base=base))
 }
 
@@ -87,6 +87,9 @@ ggplot(dig.count,aes(x=1:nrow(dig.count),y=DigitCount/sum(DigitCount)))+geom_pat
     scale_x_continuous(breaks=1:nrow(dig.count))+ylab("Pr(Digit)")+xlab("Digits")+
     opts(title="Benford's Law Test for Wikileaks Data (Observed Reports/Week)")
 dev.off()
+
+# Chi-square test for goodness of fit
+chisq.test(x=dig.count$DigitCount/sum(dig.count$DigitCount),y=sapply(1:9,dbenford))
 
 # Next, do same analysis on weekly report counts, but but break down by region
 # WARNING: This process can take a long time, depending on hardware
