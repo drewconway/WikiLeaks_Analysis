@@ -23,7 +23,7 @@ library(lme4)
 ### DATA CLEAN ###
 
 # This will take several seconds on most laptops
-afg<-read.csv("afg.csv")
+afg<-read.csv("afg.csv",stringsAsFactors=FALSE)
 
 # Add header data leftout by WikiLeaks, label reference taken from http://wardiary.wikileaks.org/
 colnames(afg)<-c("ReportKey","DateOccurred","Type","Category","TrackingNumber","Title","Summary","Region","AttackOn",
