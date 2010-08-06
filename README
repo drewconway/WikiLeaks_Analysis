@@ -1,3 +1,10 @@
+
+THIS IS A FORK OF DREWCONWAY'S WIKILEAKS ANALYSIS!
+It is focused on looking at the distribution of events in space and time.
+
+From Drew's orgiginal:
+----------------------
+
 wikileaks_analysis.R
 
 Purpose:    Code in support of statistical analysis of the WikiLeaks Afghanistan data disclosure
