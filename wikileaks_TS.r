@@ -12,9 +12,10 @@ colnames(afg)<-c("ReportKey","DateOccurred","Type","Category","TrackingNumber","
 # pick out date, label, latitude and longitude
 afg_ts <- data.frame(
     date = as.Date(afg$DateOccurred),
+    year = format(as.Date(afg$DateOccurred),"%y"),
     lat = afg$Latitude,
     lon = afg$Longitude,
-    label = factor(apply(aoat,1,function(row)paste(row[1],row[2],sep="_")))
+    label = factor(apply(cbind(afg$AttackOn,afg$Type),1,function(row)paste(row[1],row[2],sep="_")))
 )
 
 # rough lat/lon limits of Afghanistan:
@@ -34,5 +35,5 @@ afg_ts$label = factor(as.character(afg_ts$label))
 
 png("images/events_by_label.png",width=1200,height=750,res=100)
 p <- ggplot(afg_ts,aes(x=lat,y=lon))
-p + geom_point(aes(color=label))
+p + geom_point(aes(color=label,alpha=0.4)) + facet_wrap(~ year)
 dev.off()
