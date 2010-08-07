@@ -44,7 +44,7 @@ afg_ts <- afg_ts[!to_throw,]
 afg_ts$label = factor(as.character(afg_ts$label))
 
 png("images/events_by_label.png",width=1200,height=750,res=100)
-p <- ggplot(afg_ts,aes(y=lat,x=long)) + geom_point(aes(x=lat,y=lon,color=label,alpha=0.4))+facet_wrap(~year)
+p <- ggplot(afg_ts,aes(y=lat,x=long)) + geom_point(aes(color=label,alpha=0.4))+facet_wrap(~year)
 print(p)
 dev.off()
 
