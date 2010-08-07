@@ -1,6 +1,4 @@
-wikileaks_analysis.R
-
-Purpose:    Code in support of statistical analysis of the WikiLeaks Afghanistan data disclosure
+Purpose:    All code in support of statistical analysis of the WikiLeaks Afghanistan data disclosure
 
             The data is not available for download via this repository. If interested in duplicating
             the results you must download the data from WikiLeaks independently.
