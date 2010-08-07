@@ -53,7 +53,7 @@ png("images/events_by_label_map.png",width=1200,height=750,res=100)
 p.map<-ggplot(afg_ts,aes(x=lat,y=lon))+geom_point(aes(colour=label,alpha=0.4))+facet_wrap(~year)
 p.map<-p.map+geom_path(data=afg.poly,aes(x=lat,y=long,group=group,alpha=0.4))+
     scale_x_continuous(breaks=NA)+scale_y_continuous(breaks=NA)+scale_alpha(legend=FALSE)+
-    opts(title="Wikileaks Geospatial Attack Data by Year (Afghanistan District Boundaries)",panel.grid.major=theme_blank())+
+    opts(title="Wikileaks Geospatial Attack Data by Year and Type (Afghanistan District Boundaries)",panel.grid.major=theme_blank())+
     theme_bw()+xlab("Latitude")+ylab("Longitude")
 print(p.map)
 dev.off()
