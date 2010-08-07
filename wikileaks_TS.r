@@ -43,8 +43,13 @@ to_throw <- is.na(afg_ts$label)
 afg_ts <- afg_ts[!to_throw,]
 afg_ts$label = factor(as.character(afg_ts$label))
 
+png("images/events_by_label.png",width=1200,height=750,res=100)
+p <- ggplot(afg_ts,aes(x=lat,y=long)) + geom_point(aes(x=lat,y=lon,color=label,alpha=0.4))+facet_wrap(~year)
+print(p)
+dev.off()
+
 png("images/events_by_label_map.png",width=1200,height=750,res=100)
-p <- ggplot(afg_ts,aes(x=lat,y=long)) + geom_point(aes(x=lat,y=lon,color=label,alpha=0.4)) +facet_wrap(~year)
-p <-ggpath(p,data=afg.poly aes=list(x=lat,y=lon,group=group))
+p <- ggplot(afg_ts,aes(x=lat,y=long)) + geom_point(aes(x=lat,y=lon,color=label,alpha=0.4))+facet_wrap(~year)
+p <- p+geom_path(data=afg.poly,aes(x=lat,y=long,group=group))
 print(p)
 dev.off()
