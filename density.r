@@ -27,19 +27,21 @@ for (y in unique(year)){
         yi[!is.na(yi)], 
         window = win
     ))
-    d <- density(afg.points,0.3)
+    d <- density(afg.points,1)
     img <- as.matrix(d)
     # I'm confused about these xcol and yrows
-    df <- expand.grid(x=a$xcol, y=a$yrow)
+    df <- expand.grid(x=d$xcol, y=d$yrow)
     df$z <- melt(img)$value
-    df.list <- c(df.list,df)
+    df$year <- y
+    df.list[[length(df.list)+1]] <- df
 }
 
 df_stacked <- do.call(rbind, df.list)
 
 
 # note the x=y / y=x issue. Would be nice to get this clarified...
-p <- ggplot(df,aes(x=y,y=x)) + geom_tile(aes(fill=z))
-
+p <- ggplot(df_stacked,aes(x=y,y=x)) + geom_tile(aes(fill=z)) 
+p <- p + facet_wrap(~year) + scale_colour_brewer()
+p
 
 
