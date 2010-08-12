@@ -18,10 +18,10 @@ library(ggplot2)
 library(plyr)
 library(maptools)
 library(RColorBrewer)
-library(topicmodels)
 
 # For models
 library(geoR)
+library(topicmodels)
 
 # Shapefile directory
 shape.files<-"shapefiles/"
