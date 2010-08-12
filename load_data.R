@@ -28,6 +28,7 @@ shape.files<-"shapefiles/"
 ### DATA CLEAN ###
 
 # This will take several seconds on most laptops
+cat("reading data")
 afg<-read.csv("afg.csv",stringsAsFactors=FALSE)
 
 # Add header data leftout by WikiLeaks, label reference taken from http://wardiary.wikileaks.org/
@@ -35,7 +36,8 @@ colnames(afg)<-c("ReportKey","DateOccurred","Type","Category","TrackingNumber","
     "ComplexAttack","ReportingUnit","UnitName","TypeOfUnit","FriendlyWIA","FriendlyKIA","HostNationWIA","HostNationKIA",
     "CivilianWIA","CivilianKIA","EnemyWIA","EnemyKIA","EnemyDetained","MGRS","Latitude","Longitude","OriginatorGroup",
     "UpdatedByGroup","CCIR","Sigact","Affiliation","DColor","Classification")
-    
+
+cat("converting date")    
 # Convert date to R format
 afg$DateOccurred <- as.Date(afg$DateOccurred)
 year <- format.Date(afg$DateOccurred,"%Y")
@@ -61,10 +63,11 @@ cjtf82<-subset(afg,afg$ReportingUnit=="CJTF-82")
 paladin<-subset(afg,afg$ReportingUnit=="TF PALADIN LNO")
 cjsotf<-subset(afg,afg$ReportingUnit=="CJSOTF-A")
 
+cat("processing shapefiles")
 # Load shapefiles
 # Afghanistan adminstrative file
 afg.shp <- readShapePoly(paste(shape.files,"admin/admin3_poly_32.shp",sep=""))
-afg.poly<-fortify.SpatialPolygons(afg.shp)
+afg.poly <- fortify.SpatialPolygons(afg.shp)
 
 # Road files
 # OK, there's some bad data in these shape files that triggers a bug in
@@ -74,7 +77,7 @@ trace(".shp2LinesDF",
   at=7,
   print=FALSE,
   where=readShapeLines)
-afg.road<-readShapeLines(paste(shape.files,"roads/roads-all.shp",sep=""))
+afg.road <- readShapeLines(paste(shape.files,"roads/roads-all.shp",sep=""))
 #road.poly<-fortify.Lines(afg.road)
 ringroad <- afg.road[afg.road$CLASS==1, ]
 
@@ -90,11 +93,11 @@ polyline2df <- function(m) {
 
 # bleah, this is so horrible because everything is buried in objects and can't be
 # iterated over
-rr.segments <- data.frame()
-for (rr.idx in 1:nrow(ringroad)) {
-  rr <- coordinates(ringroad[rr.idx, ])[[1]][[1]]
-  rr.segments <- rbind(rr.segments, polyline2df(rr))
-}
+#rr.segments <- data.frame()
+#for (rr.idx in 1:nrow(ringroad)) {
+#  rr <- coordinates(ringroad[rr.idx, ])[[1]][[1]]
+#  rr.segments <- rbind(rr.segments, polyline2df(rr))
+#}
 
 # next step: find the distance from each event in afg to the segments in rr.segments,
 # adding a column to afg
