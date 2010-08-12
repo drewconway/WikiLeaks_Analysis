@@ -29,7 +29,7 @@ shape.files<-"shapefiles/"
 ### DATA CLEAN ###
 
 # This will take several seconds on most laptops
-cat("reading data")
+cat("reading data\n")
 afg<-read.csv("afg.csv",stringsAsFactors=FALSE)
 
 # Add header data leftout by WikiLeaks, label reference taken from http://wardiary.wikileaks.org/
@@ -38,7 +38,7 @@ colnames(afg)<-c("ReportKey","DateOccurred","Type","Category","TrackingNumber","
     "CivilianWIA","CivilianKIA","EnemyWIA","EnemyKIA","EnemyDetained","MGRS","Latitude","Longitude","OriginatorGroup",
     "UpdatedByGroup","CCIR","Sigact","Affiliation","DColor","Classification")
 
-cat("converting date")    
+cat("converting date\n")    
 # Convert date to R format
 afg$DateOccurred <- as.Date(afg$DateOccurred)
 year <- format.Date(afg$DateOccurred,"%Y")
@@ -64,11 +64,14 @@ cjtf82<-subset(afg,afg$ReportingUnit=="CJTF-82")
 paladin<-subset(afg,afg$ReportingUnit=="TF PALADIN LNO")
 cjsotf<-subset(afg,afg$ReportingUnit=="CJSOTF-A")
 
-cat("processing shapefiles")
+cat("processing shapefiles\n")
 # Load shapefiles
 # Afghanistan adminstrative file
 afg.shp <- readShapePoly(paste(shape.files,"admin/admin3_poly_32.shp",sep=""))
 afg.poly <- fortify.SpatialPolygons(afg.shp)
+
+afg.outline <- readShapePoly(paste(shape.files,"boundary/admin1_poly_32.shp",sep=""))
+intl.poly<-fortify.SpatialPolygons(afg.outline)
 
 # Road files
 # OK, there's some bad data in these shape files that triggers a bug in
