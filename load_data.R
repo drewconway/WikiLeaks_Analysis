@@ -37,8 +37,8 @@ colnames(afg)<-c("ReportKey","DateOccurred","Type","Category","TrackingNumber","
     "UpdatedByGroup","CCIR","Sigact","Affiliation","DColor","Classification")
     
 # Convert date to R format
-afg$DateOccurred<-as.Date(afg$DateOccurred)
-year<-format.Date(afg$DateOccurred,"%Y")
+afg$DateOccurred <- as.Date(afg$DateOccurred)
+year <- format.Date(afg$DateOccurred,"%Y")
 
 # Collapse bad region data
 afg$Region[grep("RC ",afg$Region,fixed=T,invert=T)]<-"UNKNOWN"
@@ -75,7 +75,7 @@ trace(".shp2LinesDF",
   print=FALSE,
   where=readShapeLines)
 afg.road<-readShapeLines(paste(shape.files,"roads/roads-all.shp",sep=""))
-#road.poly<-fortify.SpatialPolygons(afg.road)
+#road.poly<-fortify.Lines(afg.road)
 ringroad <- afg.road[afg.road$CLASS==1, ]
 
 polyline2df <- function(m) {
