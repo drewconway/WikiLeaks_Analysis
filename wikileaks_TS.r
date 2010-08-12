@@ -1,4 +1,3 @@
-
 library(ggplot2)
 library(maptools)
 
@@ -24,9 +23,8 @@ temp <- tempfile()
 download.file("http://www.aims.org.af/services/mapping/shape_files/afghanistan/polygon/district_boundary.zip",temp)
 untar(temp,compressed="gzip")
 unlink(temp)
-afg.shp <- readShapePoly("admin3_poly_32.shp")
-afg.poly<-fortify.SpatialPolygons(afg.shp)
-
+afg.shp  <- readShapePoly("admin3_poly_32.shp")
+afg.poly <- fortify.SpatialPolygons(afg.shp)
 
 # rough lat/lon limits of Afghanistan:
 max_lat = max(afg.poly$lat)
