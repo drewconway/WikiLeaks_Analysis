@@ -36,7 +36,7 @@ create.lda<-function(afg.df, num.topics=3, num.words=10, stemming=FALSE, stopwor
             yr.corp<-Corpus(VectorSource(r.sub$Summary))
             dtm<-DocumentTermMatrix(yr.corp,control=dtm.control)
             dtm<-removeSparseTerms(dtm,0.95)
-            afg.terms[[y]][[r]]<-get_terms(LDA(dtm,control = list(alpha = 0.1), k = num.words),num.topics)
+            afg.terms[[y]][[r]]<-get_terms(LDA(dtm,control = list(alpha = 0.05), k = num.words),num.topics)
         }
         names(afg.terms[[y]])<-regions
     }
@@ -45,15 +45,15 @@ create.lda<-function(afg.df, num.topics=3, num.words=10, stemming=FALSE, stopwor
 }
 
 ## Only run this portion if you have not yet generated LDA
-# afg.terms<-create.lda(afg)
+afg.terms<-create.lda(afg,stopwords=c(stopwords("english"),"report","reported","reports"))
 
 # Create proper topic dataframe
-#topic.df<-melt(afg.terms)
-#topic.df<-topic.df[,2:5]
+topic.df<-melt(afg.terms)
+topic.df<-topic.df[,2:5]
 # Strip ID column and rename
-#topic.df[,1]<-as.numeric(gsub("Topic ","",topic.df[,1]))    # Remove 'Topic ' from leading column
-#names(topic.df)<-c("TopicID","Word","Region","Year")
-# write.csv(topic.df,"afg_topic.csv")
+topic.df[,1]<-as.numeric(gsub("Topic ","",topic.df[,1]))    # Remove 'Topic ' from leading column
+names(topic.df)<-c("TopicID","Word","Region","Year")
+write.csv(topic.df,"afg_topic.csv")
 
 topic.df<-read.csv("afg_topic.csv",stringsAsFactors=FALSE)
 
@@ -113,9 +113,9 @@ other.count<-transform(other.count,long=plot.points[,1],lat=plot.points[,2])
 
 # Plot topics by year in region
 region.colours<-c("RC SOUTH"="darkred","RC NORTH"="darkblue","RC EAST"="darkgreen","RC WEST"="darkviolet")
-topic.year<-ggplot(other.count,aes(x=long,y=lat))+geom_text(aes(label=Word,size=V1,colour=Region,alpha=.6))+facet_wrap(~Year)
+topic.year<-ggplot(other.count,aes(x=long,y=lat))+geom_text(aes(label=Word,size=as.factor(V1),colour=Region,alpha=.6))+facet_wrap(~Year)
 topic.year<-topic.year+geom_path(data=intl.poly,aes(x=long,y=lat,group=group))+coord_map()+theme_bw()+
-    scale_alpha(legend=FALSE)+scale_size_continuous(limits=c(1,max(other.count$V1)),name="Frequency in Topic Models")+
+    scale_alpha(legend=FALSE)+scale_size_manual(values=2:7,name="Frequency in Topic Models")+
     scale_colour_manual(value=region.colours)+scale_x_continuous(breaks=NA)+scale_y_continuous(breaks=NA)+
-    xlab("")+ylab("")+opts(title="LDA Topic Models for WikiLeaks Report Summaries\nfrom Four Regions, by Year, Projected onto Maps")
+    xlab("")+ylab("")+opts(title="LDA Topic Models for WikiLeaks Report Summaries\nfrom Four Regions, by Year, Projected onto Map and Sized by Frequency")
 ggsave(topic.year,filename="images/topic_model_map.png",width=12,height=7.5,dpi=300)
