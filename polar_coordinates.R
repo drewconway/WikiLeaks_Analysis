@@ -1,5 +1,4 @@
 source('wikileaks_analysis.R')
-source('IPP.r')
 
 radial.distance <- function(latitude, longitude)
 {
