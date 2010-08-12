@@ -1,0 +1,134 @@
+Identification_Information:
+  Citation:
+    Citation_Information:
+      Originator: Afghanistan Information Management Services (AIMS)
+      Publication_Date: published in 1998.
+      Title: District Level Administrative Boundaries of Afghanistan.
+      Geospatial_Data_Presentation_Form: vector digital data
+      Publication_Information:
+        Publication_Place: Islamabad, Pakistan.
+        Publisher: Afghanistan Information Management Services (AIMS)
+      Online_Linkage: <http://www.aims.org.af/home/sroots.asp?seckeyz=z2&secido=2&seckeyt=a10>
+  Description:
+    Abstract: District level Administrative Boundaries of Afghanistan contains 329 districts boundaries for Afghanistan, mapped at 1:100,000(based on 1:250000 scale. The coverage has polygon topology and was uploaded from land cover 1:25000(1993) which was digitized by FAO (Rome) and later was converted and updated to ESRI shapefile mapped at 1:100,000 scale at AIMS office.
+    Purpose: The polygon provides a ready reference for 329 district level boundaries at 1:100,000 scale. Not for use at scale larger than 1:100,000. Data at this scale is suitable for use in regional studies and planning.
+  Time_Period_of_Content:
+    Time_Period_Information:
+      Single_Date/Time:
+        Calendar_Date: 1997-2005
+    Currentness_Reference: source dates
+  Status:
+    Progress: complete
+    Maintenance_and_Update_Frequency: As needed
+  Spatial_Domain:
+    Bounding_Coordinates:
+      West_Bounding_Coordinate: 60
+      East_Bounding_Coordinate: 75
+      North_Bounding_Coordinate: 39
+      South_Bounding_Coordinate: 29
+  Keywords:
+    Theme:
+      Theme_Keyword_Thesaurus: District boundaries of Afghanistan
+      Theme_Keyword: Afghan District boundaries
+      Theme_Keyword: District boundaries
+      Theme_Keyword: Boundaries
+    Place:
+      Place_Keyword: Afghanistan
+      Place_Keyword: Kabul
+      Place_Keyword: Afghan
+  Access_Constraints: Secondary distribution by permission only. Please visit Afghanistan Information Managment Service (AIMS) office for permission. Any secondary distribution must have this documentation appended.
+  Use_Constraints:
+    Users must assume responsibility in determining the usability of this data for their purposes. Digital maps retain the accuracy of their source materials. In the use of AIMS GIS data, please check sources, scale, accuracy, currentness and other available information. Please confirm that you are using the most recent copy of both data and metadata from the AIMS GIS Data Catalog. The Afghanistan Information Managment Service (AIMS) provides notice of updates and corrections directly to the AIMS GIS Technical Group.
+    AIMS is not responsible for local edits to data or metadata. Updates, corrections, and feedback, incorporated in the AIMS GIS database are made in accordance with "Data Standards for AIMS Geographic Information Systems".
+  Point_of_Contact:
+    Contact_Information:
+      Contact_Person_Primary:
+        Contact_Person: Zohra Sulaiman
+        Contact_Organization: Afghanistan Information Management Services (AIMS)
+      Contact_Position: Staff Assistant
+      Contact_Address:
+        Address_Type: Mailing and Physical Address
+        Address:
+          UNDP/AIMS Salang Watt
+          Next to Inhesarat
+          House No.12
+        City: Kabul
+        State_or_Province: Kabul
+        Postal_Code: PO Box 005
+        Country: Afghanistan
+      Contact_Voice_Telephone: 0093(0)70-248827
+      Contact_Facsimile_Telephone: None
+      Contact_Electronic_Mail_Address: info@aims.org.af
+      Hours_of_Service: Sunday though Thursday 0800 - 1700 (GMT +4:30)
+  Native_Data_Set_Environment: Tkme (standard software for Metadata creation)
+Data_Quality_Information:
+  Completeness_Report: Data set is complete.
+  Lineage:
+    Source_Information:
+      Source_Citation:
+        Citation_Information:
+          Originator: Afghan Geodesy and Cartography Head Office(AGCHO)
+          Publication_Date: 1990
+          Title: District Level Administrative Boundaries of Afghanistan.
+          Geospatial_Data_Presentation_Form: Vector Digital Data
+          Series_Information:
+          Publication_Information:
+          Online_Linkage: <http://www.aims.org.af/home/sroots.asp?seckeyz=z2&secido=2&seckeyt=a10>
+      Type_of_Source_Media: vector digital data
+    Process_Step:
+      Process_Description:
+        District Level Boundaries of Afghanistan, contains 329 District level boundaries for Afghanistan. The shapefile has polygon topology and was created in AtlasGIS by (USAID) and later on was updated 
+        to ArcView shapefile at AIMS. shapefile attributes were carefully examined for accuracy based on existing source material (USDMA 100K maps)and limitations of scale. NODE ERRORS were resolved. The shapefile was CLEANED and BUILT with POLYGON topology.
+      Process_Date: 1998
+Spatial_Data_Organization_Information:
+  Direct_Spatial_Reference_Method: Vector
+  Point_and_Vector_Object_Information:
+    SDTS_Terms_Description:
+      SDTS_Point_and_Vector_Object_Type: Polygon
+      Point_and_Vector_Object_Count: 329
+  Raster_Object_Information:
+    Raster_Object_Type: None
+Spatial_Reference_Information:
+  Horizontal_Coordinate_System_Definition:
+    Geographic:
+      Latitude_Resolution: 0.000000
+      Longitude_Resolution: 0.000000
+      Geographic_Coordinate_Units: Decimal degrees
+    Geodetic_Model:
+      Horizontal_Datum_Name: WGS84
+Entity_and_Attribute_Information:
+  Detailed_Description:
+    Entity_Type:
+      Entity_Type_Label: Admin3_Poly_32.shp
+Distribution_Information:
+  Resource_Description: Downloadable Data
+  Standard_Order_Process:
+    Digital_Form:
+      Digital_Transfer_Information:
+        Format_Name: ESRI Shapefile
+        Transfer_Size: 712KB
+Metadata_Reference_Information:
+  Metadata_Date: 2/11/2004
+  Metadata_Review_Date: 17/02/2005
+  Metadata_Contact:
+    Contact_Information:
+      Contact_Person_Primary:
+        Contact_Person: Ahmad Khalid Amini
+        Contact_Organization: AIMS
+      Contact_Position: GIS Technician
+      Contact_Address:
+        Address_Type: Mailing and Physical Address
+        Address: Next to Inhisarat Salang Watt.
+        City: Kabul
+        State_or_Province: Kabul
+        Postal_Code: Central Post Office Box No 005
+        Country: Afghanistan
+      Contact_Voice_Telephone: 0093 (0) 70023272
+      Contact_Electronic_Mail_Address: khalid.amini@aims.org.af
+      Hours_of_Service: Sunday though Thursday 0800 - 1700 (GMT +4:30)
+  Metadata_Standard_Name: AIMS Mapping Standard Metadata
+  Metadata_Standard_Version: AIMS-STD-001-2004
+  Metadata_Time_Convention: local time
+  Metadata_Extensions:
+    Online_Linkage: <http://www.aims.org.af/home/sroots.asp?seckeyz=z2&secido=2&seckeyt=a10>
+    Profile_Name: AIMS Mapping Standard Metadata

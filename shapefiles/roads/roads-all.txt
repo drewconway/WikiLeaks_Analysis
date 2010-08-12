@@ -1,0 +1,137 @@
+Identification_Information:
+  Citation:
+    Citation_Information:
+      Originator: Afghanistan Information Management Service (AIMS)
+      Publication_Date: 1998
+      Title: Roads of Afghanistan
+      Geospatial_Data_Presentation_Form: Vector digital data
+      Publication_Information:
+        Publication_Place: Islamabad, Pakistan
+        Publisher: Afghanistan Information Management Service (AIMS)
+      Online_Linkage: <http://www.aims.org.af/home/sroots.asp?seckeyz=z2&secido=2&seckeyt=a10>
+  Description:
+    Abstract: The roads layer was digitized from USDMA 1:100,000 scale.  The layer includes 3 type of roads, all weather primary, all weather secondary and tracks.
+    Purpose: Road layers provide basemap data on road and track features at a 1:100,000 scale. Users must assume responsibility in determining the usability of this data for their purpose. Not for use in scales greater than 1:100,000.
+  Time_Period_of_Content:
+    Time_Period_Information:
+      Single_Date/Time:
+        Calendar_Date: 1997 - 2005
+    Currentness_Reference: Source Dates
+  Status:
+    Progress: Complete
+    Maintenance_and_Update_Frequency: As needed
+  Spatial_Domain:
+    Bounding_Coordinates:
+      West_Bounding_Coordinate: 60
+      East_Bounding_Coordinate: 75
+      North_Bounding_Coordinate: 39
+      South_Bounding_Coordinate: 29
+  Keywords:
+    Theme:
+      Theme_Keyword_Thesaurus: Streets
+      Theme_Keyword: Roads
+      Theme_Keyword: Tracks
+      Theme_Keyword: Transportation
+    Place:
+      Place_Keyword: Afghanistan
+      Place_Keyword: Kabul
+      Place_Keyword: Afghanistan
+  Access_Constraints: Secondary distribution by permission only. Please visit Afghanistan Information Managment Service (AIMS) office for permission. Any secondary distribution must have this documentation appended.
+  Use_Constraints:
+    Users must assume responsibility in determining the usability of this data for their purposes. Digital maps retain the accuracy of their source materials. In the use of Afghanistan Information Management Service (AIMS)GIS data, please check sources, scale, accuracy, currentness and other available information. Please confirm that you are using the most recent copy of both data and metadata from the AIMS GIS Data Catalog. The office of AIMS provides notice of updates and corrections directly to the AIMS GIS Technical Group.
+
+    AIMS is not responsible for local edits to data or metadata. Updates, corrections, and feedback, incorporated in the AIMS GIS database are made in accordance with "Data Standards for AIMS Geographic Information Systems".
+  Point_of_Contact:
+    Contact_Information:
+      Contact_Person_Primary:
+        Contact_Person: Zohra Sulaiman
+        Contact_Organization: Afghanistan Information Management Service (AIMS)
+      Contact_Position: Staff Assistant
+      Contact_Address:
+        Address_Type: Mailing and Physical Address
+        Address:
+          UNDP/AIMS Salang Watt
+          Next to Inhesarat
+          House No.12
+        City: Kabul
+        State_or_Province: Kabul
+        Postal_Code: PO Box 005
+        Country: Afghanistan
+      Contact_Voice_Telephone: 00-93(0)70-248827
+      Contact_Facsimile_Telephone: None
+      Contact_Electronic_Mail_Address: info@aims.org.af
+      Hours_of_Service: Sunday through Thursday 0800 - 1700 (GMT +4:30)
+  Native_Data_Set_Environment: Tkme, standard software for Metadata creation provided by United States Geological Survey (USGS)
+Data_Quality_Information:
+  Attribute_Accuracy:
+  Completeness_Report: Data set is complete
+  Lineage:
+    Source_Information:
+      Source_Citation:
+        Citation_Information:
+          Originator: United States Agency for International Development (USAID)
+          Publication_Date: 1990
+          Title: Roads of Afghanistan
+          Geospatial_Data_Presentation_Form: Vector Digital Data
+          Series_Information:
+          Publication_Information:
+          Online_Linkage: <http://www.aims.org.af/home/sroots.asp?seckeyz=z2&secido=2&seckeyt=a10>
+      Type_of_Source_Media: Vector Digital Data
+    Process_Step:
+      Process_Description: This layer was digitized by United States Agency for International Development (USAID) and later on was updated at AIMS based on United States Defense Mapping Agency (USDMA) 1:100,000 scale and Russian 1:50,000 scale topo maps. In the class field, there are three classes; 1 = all weather primary, 2 = all weather secondary, 3 = tracks.  For more details regarding the process steps please refer to USAID office.
+      Process_Date: 1990-2005
+Spatial_Data_Organization_Information:
+  Direct_Spatial_Reference_Method: Polyline
+  Point_and_Vector_Object_Information:
+    SDTS_Terms_Description:
+      SDTS_Point_and_Vector_Object_Type: Polyline
+      Point_and_Vector_Object_Count: 6543
+  Raster_Object_Information:
+    Raster_Object_Type: None
+Spatial_Reference_Information:
+  Horizontal_Coordinate_System_Definition:
+    Geographic:
+      Latitude_Resolution: 0.000000
+      Longitude_Resolution: 0.000000
+      Geographic_Coordinate_Units: Decimal Degrees
+    Geodetic_Model:
+      Horizontal_Datum_Name: WGS84
+Entity_and_Attribute_Information:
+  Detailed_Description:
+    Entity_Type:
+      Entity_Type_Label: roads-all.shp
+Distribution_Information:
+  Resource_Description: Downloadable Data
+  Standard_Order_Process:
+    Digital_Form:
+      Digital_Transfer_Information:
+        Format_Name: Environmental Systems Research Institute, Inc. (ESRI), Shapefile
+        Transfer_Size: 6.9MB
+Metadata_Reference_Information:
+  Metadata_Date: 5/11/2004
+  Metadata_Review_Date: 20/02/2005
+  Metadata_Contact:
+    Contact_Information:
+      Contact_Person_Primary:
+        Contact_Person: Ahmad Khalid Amini
+        Contact_Organization: Afghanistan Information Management Service (AIMS)
+      Contact_Position: Geographic Information System (GIS) Technician
+      Contact_Address:
+        Address_Type: Mailing and Physical Address
+        Address:
+          UNDP/AIMS Salang Watt
+          Next to Inhesarat
+          House No.12.
+        City: Kabul
+        State_or_Province: Kabul
+        Postal_Code: Central Post Office Box No 005
+        Country: Afghanistan
+      Contact_Voice_Telephone: 00-93(0)70023272
+      Contact_Electronic_Mail_Address: khalid.amini@aims.org.af
+      Hours_of_Service: Sunday through Thursday 0800 - 1700 (GMT +4:30)
+  Metadata_Standard_Name: AIMS Mapping Standard Metadata
+  Metadata_Standard_Version: AIMS-STD-001-2004
+  Metadata_Time_Convention: Local Time
+  Metadata_Extensions:
+    Online_Linkage: <http://www.aims.org.af/home/sroots.asp?seckeyz=z2&secido=2&seckeyt=a10>
+    Profile_Name: AIMS Mapping Standard Metadata
