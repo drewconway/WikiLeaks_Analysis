@@ -1,3 +1,6 @@
+#untrace(".shp2LinesDF", where=readShapeLines)
+
+
 # https://stat.ethz.ch/pipermail/r-help/2009-January/183960.html
 ggsave.latex <- function(..., caption = NULL, label = NULL, figure.placement = "hbt", floating = TRUE, caption.placement="bottom", latex.environments="center"){
 	ggsave(...)
