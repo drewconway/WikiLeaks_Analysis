@@ -75,5 +75,26 @@ trace(".shp2LinesDF",
   print=FALSE,
   where=readShapeLines)
 afg.road<-readShapeLines(paste(shape.files,"roads/roads-all.shp",sep=""))
-road.poly<-fortify.SpatialPolygons(afg.road)
+#road.poly<-fortify.SpatialPolygons(afg.road)
+ringroad <- afg.road[afg.road$CLASS==1, ]
 
+polyline2df <- function(m) {
+  # the df will be rows(m)-1 rows long
+  df.rows <- nrow(m)-1
+  df <- data.frame(x1=numeric(df.rows), x2=numeric(df.rows), y1=numeric(df.rows), y2=numeric(df.rows))
+  for (r in seq(df.rows)) {
+    df[r, ] <- c(m[r,1], m[r+1,1], m[r,2], m[r+1,2])
+  }
+  df
+}
+
+# bleah, this is so horrible because everything is buried in objects and can't be
+# iterated over
+rr.segments <- data.frame()
+for (rr.idx in 1:nrow(ringroad)) {
+  rr <- coordinates(ringroad[rr.idx, ])[[1]][[1]]
+  rr.segments <- rbind(rr.segments, polyline2df(rr))
+}
+
+# next step: find the distance from each event in afg to the segments in rr.segments,
+# adding a column to afg
