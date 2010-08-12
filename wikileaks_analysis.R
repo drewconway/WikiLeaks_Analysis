@@ -2,9 +2,9 @@
 # Date:            2010-07-26                                
 # Author:          Drew Conway
 # Email:           drew.conway@nyu.edu                                      
-# Purpose:         Analyze leaked Afghanistan inicdent data
+# Purpose:         Produce initial plots and Benford analysis
 # Data Used:       afg.csv (http://leakmirror.wikileaks.org/file/straw-glass-and-bottle/afg-war-diary.csv.7z)
-# Packages Used:   ggplot2,lme4
+# Packages Used:   see load_data.R
 # Output File:     
 # Data Output:     
 # Machine:         Drew Conway's MacBook Pro
@@ -13,41 +13,8 @@
 # For more information on FreeBSD see: http://www.opensource.org/licenses/bsd-license.php
 # All rights reserved.                                                         
 
-# For data manipulation and visualization
-library(ggplot2)
-library(plyr)
-# For models
-library(Zelig)
-library(lme4)
-
-### DATA CLEAN ###
-
-# This will take several seconds on most laptops
-afg<-read.csv("afg.csv",stringsAsFactors=FALSE)
-
-# Add header data leftout by WikiLeaks, label reference taken from http://wardiary.wikileaks.org/
-colnames(afg)<-c("ReportKey","DateOccurred","Type","Category","TrackingNumber","Title","Summary","Region","AttackOn",
-    "ComplexAttack","ReportingUnit","UnitName","TypeOfUnit","FriendlyWIA","FriendlyKIA","HostNationWIA","HostNationKIA",
-    "CivilianWIA","CivilianKIA","EnemyWIA","EnemyKIA","EnemyDetained","MGRS","Latitude","Longitude","OriginatorGroup",
-    "UpdatedByGroup","CCIR","Sigact","Affiliation","DColor","Classification")
-    
-# Convert date to R format
-afg$DateOccurred<-as.Date(afg$DateOccurred)
-
-# Collapse bad region data
-afg$Region[grep("RC ",afg$Region,fixed=T,invert=T)]<-"UNKNOWN"
-afg$Region<-as.factor(afg$Region)
-
-# Aggregate WIA and KIA data into new columns
-all.wia<-afg$FriendlyWIA+afg$HostNationWIA+afg$CivilianWIA+afg$EnemyWIA
-all.kia<-afg$FriendlyKIA+afg$HostNationKIA+afg$CivilianKIA+afg$EnemyKIA
-all.cas<-all.wia+all.kia
-afg<-transform(afg,AllKIA=all.kia,AllWIA=all.wia,AllCasualty=all.cas)
-    
-# Create some useful unit subsets for the time-series analysis
-cjtf82<-subset(afg,afg$ReportingUnit=="CJTF-82")
-paladin<-subset(afg,afg$ReportingUnit=="TF PALADIN LNO")
-cjsotf<-subset(afg,afg$ReportingUnit=="CJSOTF-A")
+source("load_data.R")
+source("utils.R")
 
 ### BASE VISUALIZATION ###
 dir.create("images")
@@ -121,4 +88,30 @@ ggplot(region.subs,aes(x=1:9))+geom_line(aes(y=DigitCount/DigitSum, colour="Obse
     opts(title="Benford's Law Test for Wikileaks Data by Region (Observed Reports/Week)")+
     scale_colour_manual(values=c("Observed"="darkblue","Theoretical"="darkred"),name="Leading Digits")+
     facet_wrap(~Region)
+dev.off()
+
+# 3) Contractor analysis
+
+# First, create a new column to identify where Summary column includes the word 'contractor'
+has.cntr<-rep(FALSE,nrow(afg))
+has.cntr[grep("contractor",afg$Summary,fixed=FALSE,ignore.case=TRUE)]<-TRUE
+afg<-transform(afg,HasCntr=has.cntr)
+# cntr.colours<-c("1"="red","0"="blue")
+
+# First plot, kernel density plots of KIA and WIA involving contractors
+png("images/contractor_timeline.png",width=2000,height=1000,res=100)
+cntr.cas<-ggplot(afg,aes(x=DateOccurred))+stat_bin(aes(fill=as.factor(AttackOn),y=log(..count..)))+facet_wrap(~HasCntr,nrow=2,ncol=1)+
+    opts(title="Wikileaks Data Where Report Summary Contains\nWord 'CONTRACTOR' - Kernel Density by 'Attack On'")+
+    xlab("Date (30 Day Intervals)")+ylab("Kernel Density")+theme_bw()
+print(cntr.cas)
+dev.off()
+
+png("images/contractor_geo.png",width=1400,height=1000,res=120)
+cntr.geo<-ggplot(afg.cntr,aes(x=Longitude,y=Latitude))+geom_point(aes(colour=AttackOn,alpha=.4,size=3))
+cntr.geo<-cntr.geo+geom_path(data=afg.poly,aes(x=long,y=lat,group=group,alph=.4))+
+    opts(title="Wikileaks Data Where Report Summary Contains\nWord 'CONTRACTOR' - GEOSPATIAL With District Boundaries",
+    panel.grid.major=theme_blank(),panel.grid.minor=theme_blank())+scale_colour_manual(values=cntr.colours,name="Attack On")+
+    scale_x_continuous(breaks=NA)+scale_y_continuous(breaks=NA)+scale_alpha(legend=FALSE)+
+    scale_size_continuous(legend=FALSE)+coord_map()+theme_bw()
+print(cntr.geo)
 dev.off()
