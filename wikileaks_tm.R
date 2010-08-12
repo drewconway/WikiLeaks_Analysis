@@ -20,7 +20,7 @@ source("utils.R")
 regions<-levels(as.factor(afg$Region))
 years<-levels(as.factor(afg$Year))
 afg.terms<-list()
-dtm.control<-list(stemming = FALSE, stopwords = FALSE, minWordLength = 3,removeNumbers = TRUE)
+dtm.control<-list(stemming = TRUE, stopwords = TRUE, minWordLength = 3,removeNumbers = TRUE)
 
 # Create nested list of Summary topic models for all Year/Region pairs
 for(y in years){

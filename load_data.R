@@ -21,6 +21,7 @@ library(RColorBrewer)
 
 # For models
 library(geoR)
+library(topicmodels)
 
 # Shapefile directory
 shape.files<-"shapefiles/"
