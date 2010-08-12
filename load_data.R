@@ -76,3 +76,4 @@ trace(".shp2LinesDF",
   where=readShapeLines)
 afg.road<-readShapeLines(paste(shape.files,"roads/roads-all.shp",sep=""))
 road.poly<-fortify.SpatialPolygons(afg.road)
+
