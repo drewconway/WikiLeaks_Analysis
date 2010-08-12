@@ -31,10 +31,10 @@ outline = fortify.SpatialPolygons(afg.outline)
 t = unclass(as.POSIXct.Date(afg$DateOccurred))
 # 6 years
 num_weeks = 6 * 52  # weeks
-day = 60 * 60 * 24 # days (seconds)
+day_duration = 60 * 60 * 24 # seconds
 now = t[1]
-num_days = round(t[length(t)]-t[1]) / day
-three_months = day * 31 * 3
+num_days = round(t[length(t)]-t[1]) / day_duration
+three_months = day_duration * 31 * 3
 for (day in seq(num_days)){
     time.flags = (t > now) & (t < now+three_months)
     long = afg$Longitude[time.flags]
@@ -44,7 +44,7 @@ for (day in seq(num_days)){
         lat[!is.na(lat)], 
         window = win
     ))
-    now <- now+day
+    now <- now+day_duration
     d <- density(afg.points,0.2)
     img <- t(as.matrix(d)) # note transposition
     df <- expand.grid(x=d$xcol, y=d$yrow)
@@ -70,7 +70,7 @@ for (day in seq(num_days)){
         limits=c(0, 1)
     )
     # TODO - make this not square
-    ggsave(filename=paste('frames/afghanistan_',day,'.png',sep=""), plot = p)
+    ggsave(filename=paste('/Users/mike/Data/frames/afghanistan_',day,'.png',sep=""), plot = p)
     cat(paste("saved frame",day))
 }
 
