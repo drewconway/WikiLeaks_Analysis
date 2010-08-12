@@ -67,5 +67,13 @@ afg.shp <- readShapePoly(paste(shape.files,"admin/admin3_poly_32.shp",sep=""))
 afg.poly<-fortify.SpatialPolygons(afg.shp)
 
 # Road files
-#afg.road<-readShapePoly(paste(shape.files,"roads/roads-all.shp",sep=""))
-#road.poly<-fortify.SpatialPolygons(afg.road)
+# OK, there's some bad data in these shape files that triggers a bug in
+# maptools. This works around it.
+trace(".shp2LinesDF",
+  quote({good <- (df$LENGTH_ != 0); df <- df[good, ]; shapes <- shapes[good] }),
+  at=7,
+  print=FALSE,
+  where=readShapeLines)
+afg.road<-readShapeLines(paste(shape.files,"roads/roads-all.shp",sep=""))
+road.poly<-fortify.SpatialPolygons(afg.road)
+
