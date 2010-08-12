@@ -20,7 +20,11 @@ library(maptools)
 library(RColorBrewer)
 
 # For models
-library(Zelig)
+library(geoR)
+library(geoRglm)
+
+# Shapefile directory
+shape.files<-"shapefiles/"
 
 ### DATA CLEAN ###
 
@@ -58,6 +62,11 @@ cjtf82<-subset(afg,afg$ReportingUnit=="CJTF-82")
 paladin<-subset(afg,afg$ReportingUnit=="TF PALADIN LNO")
 cjsotf<-subset(afg,afg$ReportingUnit=="CJSOTF-A")
 
-# Load shapefile and create proper dataframe
-afg.shp <- readShapePoly("admin3_poly_32.shp")
-afg.poly<-fortify.SpatialPolygons(afg.shp3)
+# Load shapefiles
+# Afghanistan adminstrative file
+afg.shp <- readShapePoly(paste(shape.files,"admin/admin3_poly_32.shp",sep=""))
+afg.poly<-fortify.SpatialPolygons(afg.shp)
+
+# Road files
+afg.road<-readShapePoly(paste(shape.files,"roads/roads-all.shp",sep=""))
+road.poly<-fortify.SpatialPolygons(afg.road)

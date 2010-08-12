@@ -13,10 +13,8 @@
 # For more information on FreeBSD see: http://www.opensource.org/licenses/bsd-license.php
 # All rights reserved.                                                         
 
-library(maptools)
-library(ggplot2)
+source("load_data.R")
+source("utils.R")
 
 
-# Afghanistan data and shapefile
-afg.shp<-readShapePoly("admin3_poly_32.shp")
 

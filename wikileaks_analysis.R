@@ -14,6 +14,7 @@
 # All rights reserved.                                                         
 
 source("load_data.R")
+source("utils.R")
 
 ### BASE VISUALIZATION ###
 dir.create("images")

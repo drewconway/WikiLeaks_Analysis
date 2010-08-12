@@ -1,4 +1,5 @@
 source("load_data.R")
+source("utils.R")
 
 # pick out date, label, latitude and longitude
 afg_ts <- data.frame(
