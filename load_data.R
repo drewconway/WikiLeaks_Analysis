@@ -21,7 +21,6 @@ library(RColorBrewer)
 
 # For models
 library(geoR)
-library(geoRglm)
 
 # Shapefile directory
 shape.files<-"shapefiles/"
