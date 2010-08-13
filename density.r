@@ -3,6 +3,9 @@ library(geoR)
 library(maptools)
 library(mapproj)
 
+# this script uses a kernel smoother to create an animated heat map of 
+# activity in afghanistan over 2004 to 2009. Warning: this script takes a long
+# time to run, due to the slow speed of plotting so much information
 
 source('load_data.R') #afg, year, other stuff...
 
@@ -35,7 +38,7 @@ day_duration = 60 * 60 * 24 # seconds
 now = t[1]
 num_days = round(t[length(t)]-t[1]) / day_duration
 three_months = day_duration * 31 * 3
-for (day in seq(num_days)){
+for (day in seq(3)){
     time.flags = (t > now) & (t < now+three_months)
     long = afg$Longitude[time.flags]
     lat = afg$Latitude[time.flags]
@@ -69,8 +72,13 @@ for (day in seq(num_days)){
         high="red",
         limits=c(0, 1)
     )
+    # this bit doesn't quite work - need to sort out the origin.
+    now.posix <- as.POSIXct(now,origin=afg$DateOccurred[1])
+    df.date = data.frame(x=70,y=30,t=format(now.posix,"%B"))
+    p <- p + geom_text(data = df.date, aes(x=x, y=y, label=t))
     # TODO - make this not square
     ggsave(filename=paste('/Users/mike/Data/frames/afghanistan_',day,'.png',sep=""), plot = p)
     cat(paste("saved frame",day))
 }
-
+# run this command to join the files
+# ffmpeg -f image2 -r 10 -i ~/Data/frames/afghanistan_%d.png -b 600k afghanistan.mp4
