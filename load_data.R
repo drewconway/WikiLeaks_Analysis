@@ -70,6 +70,9 @@ cat("reticulating splines\n")
 afg.shp <- readShapePoly(paste(shape.files,"admin/admin3_poly_32.shp",sep=""))
 afg.poly <- fortify.SpatialPolygons(afg.shp)
 
+afg.outline <- readShapePoly(paste(shape.files,"boundary/admin1_poly_32.shp",sep=""))
+intl.poly<-fortify.SpatialPolygons(afg.outline)
+
 # Road files
 # OK, there's some bad data in these shape files that triggers a bug in
 # maptools. This works around it.

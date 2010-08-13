@@ -9,9 +9,6 @@ library(mapproj)
 
 source('load_data.R') #afg, year, other stuff...
 
-afg.outline <- readShapePoly(
-    paste(shape.files,"boundary/admin1_poly_32.shp",sep="")
-)
 spatstat.options(checkpolygons = FALSE) 
 x = afg$Longitude
 y = afg$Latitude
