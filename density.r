@@ -63,12 +63,15 @@ for (day in seq(3)){
     p <- p + theme_bw() #+ coord_map() #coord_map only works on the paths
     p <- p + geom_path(data=afg.poly, aes(y=lat,x=long,group=group), alpha=0.1)
     p <- p + geom_path(data=outline,  aes(y=lat,x=long,group=group), size=0.5)
-    p <- p + geom_path(data=roads,    aes(y=lat,x=long,group=group), size=1)
+    p <- p + geom_path(data=roads,    aes(y=lat,x=long,group=group), size=1.5)
+    p <- p + geom_path(data=roads,    aes(y=lat,x=long,group=group), size=1, 
+        colour="darkseagreen1")
     p <- p + scale_fill_gradient(
         "Intensity",
         low="cornsilk2",
         high="firebrick",
-        limits=c(0, 1)
+        limits=c(0, 1),
+        legend=FALSE
     )
     # this bit doesn't quite work - need to sort out the origin.
     now.posix <- as.POSIXct(now,origin=unix_start)
