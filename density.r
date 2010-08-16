@@ -35,9 +35,11 @@ day_duration = 60 * 60 * 24 # seconds
 now = t[1]
 num_days = round(t[length(t)]-t[1]) / day_duration
 three_months = day_duration * 31 * 3
+one_month = day_duration * 31
+two_weeks = day_duration * 14
 unix_start = as.Date("1970-01-01")
-for (day in seq(3)){
-    time.flags = (t > now) & (t < now+three_months)
+for (day in seq(num_days)){
+    time.flags = (t < now) & (t > now-one_month)
     long = afg$Longitude[time.flags]
     lat = afg$Latitude[time.flags]
     afg.points = as.ppp(ppp(
@@ -65,7 +67,7 @@ for (day in seq(3)){
     p <- p + geom_path(data=outline,  aes(y=lat,x=long,group=group), size=0.5)
     p <- p + geom_path(data=roads,    aes(y=lat,x=long,group=group), size=1.5)
     p <- p + geom_path(data=roads,    aes(y=lat,x=long,group=group), size=1, 
-        colour="darkseagreen1")
+        colour="darkgoldenrod1")
     p <- p + scale_fill_gradient(
         "Intensity",
         low="cornsilk2",
@@ -76,7 +78,8 @@ for (day in seq(3)){
     # this bit doesn't quite work - need to sort out the origin.
     now.posix <- as.POSIXct(now,origin=unix_start)
     df.date = data.frame(x=70,y=30,t=format(now.posix,"%B %Y"))
-    p <- p + geom_text(data = df.date, aes(x=x, y=y, label=t))
+    p <- p + geom_text(data = df.date, aes(x=x, y=y, label=t), hjust=0)
+    
     p <- p + opts(panel.grid.major = theme_blank())
     p <- p + opts(panel.grid.minor = theme_blank())
     p <- p + opts(panel.background = theme_blank())
@@ -87,8 +90,9 @@ for (day in seq(3)){
     p <- p + opts(axis.text.x = theme_blank())
     p <- p + opts(axis.text.y = theme_blank())
     # TODO - make this not square
+    cat(paste("processing frame\n\t",day))
     ggsave(filename=paste('/Users/mike/Data/frames/afghanistan_',day,'.png',sep=""), plot = p)
-    cat(paste("saved frame",day))
+    
 }
 # run this command to join the files
-# ffmpeg -f image2 -r 10 -i ~/Data/frames/afghanistan_%d.png -b 600k afghanistan.mp4
+# ffmpeg -f image2 -r 20 -i ~/Data/frames/afghanistan_%d.png -b 600k afghanistan.mp4
