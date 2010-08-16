@@ -49,3 +49,4 @@ pdf('images/polar_coordinates_plot.pdf')
 ggplot(afg, aes(x = log(RadialDistance), y = LatitudeAngle)) +
   geom_point()
 dev.off()
+
