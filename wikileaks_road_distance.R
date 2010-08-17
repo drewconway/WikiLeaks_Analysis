@@ -89,6 +89,8 @@ distances <- aaply(afg, 1, function(event) {
 
 afg$distToRoad <- distances
 
+save(distances, file='distances.Rsave')
+
 plot.dist1 <- ggplot(afg, aes(log(distToRoad), ..density..)) + geom_histogram() + scale_x_log10() + 
   facet_wrap(~Year) + coord_cartesian(xlim = c(.01,100)) 
 
