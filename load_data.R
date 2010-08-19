@@ -85,3 +85,12 @@ afg.road <- readShapeLines(paste(shape.files,"roads/roads-all.shp",sep=""))
 #road.poly<-fortify.Lines(afg.road)
 ringroad <- afg.road[afg.road$CLASS==1, ]
 
+# get the distances to the road, either by loading it from a file or running
+# a (long!) script
+if (file.exists('distances.Rsave')) {
+  load('distances.Rsave')
+  afg$distToRoad <- distances
+} else {
+  source("wikileaks_road_distance.R")
+}
+
