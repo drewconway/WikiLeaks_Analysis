@@ -1,4 +1,4 @@
-afg.csv
+*.csv
 .DS_Store
 database.yml
 images/terms
