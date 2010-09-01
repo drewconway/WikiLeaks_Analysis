@@ -31,6 +31,7 @@ shape.files<-"shapefiles/"
 # This will take several seconds on most laptops
 cat("reading data\n")
 afg<-read.csv("afg.csv", stringsAsFactors=FALSE)
+afg<-read.csv("afg.csv",stringsAsFactors=FALSE)
 
 # Add header data leftout by WikiLeaks, label reference taken from http://wardiary.wikileaks.org/
 colnames(afg)<-c("ReportKey","DateOccurred","Type","Category","TrackingNumber",
@@ -88,11 +89,21 @@ afg.road <- readShapeLines(paste(shape.files,"roads/roads-all.shp",sep=""))
 #road.poly<-fortify.Lines(afg.road)
 ringroad <- afg.road[afg.road$CLASS==1, ]
 
+# get the distances to the road, either by loading it from a file or running
+# a (long!) script
+if (file.exists('distances.Rsave')) {
+  load('distances.Rsave')
+  afg$distToRoad <- distances
+} else {
+  source("wikileaks_road_distance.R")
+}
+
 # Settlements
 afg.sett <- readShapePoints("shapefiles/points/settlements/07_03_settlements.shp") 
 # pick out capital and major cities
 sett.flag = (afg.sett$TYPE==3) | (afg.sett$TYPE==2)
 afg.sett <- afg.sett[sett.flag,]
+
 # save files to speed up life
 afg.data = list(
     data = afg,
@@ -108,5 +119,6 @@ afg.data$data$Type[afg.data$data$Type=="Counter Insurgency"] = "Counter-Insurgen
 afg.data$data$Type[afg.data$data$Type=="Enemy"] = "Enemy Action"
 afg.data$data$Type = factor(afg.data$data$Type)
 save(afg.data, file="afg.data")
+
 
 

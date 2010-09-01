@@ -14,18 +14,19 @@ summary.terms <- scan('summary_terms.txt', what = 'character')
 
 for (term in summary.terms)
 {
+  afg[, term] <- grepl(term, strsplit(tolower(afg$Summary), '\\s+')) 
   # Set up a column in afg indicating whether each event summary mentions term.
-  for (i in 1:nrow(afg))
-  {
-    if (grepl(term, strsplit(tolower(afg[i, 'Summary']), '\\s+')))
-    {
-      afg[i, term] <- 1
-    }
-    else
-    {
-      afg[i, term] <- 0
-    }
-  }
+  #for (i in 1:nrow(afg))
+  #{
+  #  if (grepl(term, strsplit(tolower(afg[i, 'Summary']), '\\s+')))
+  #  {
+  #    afg[i, term] <- 1
+  #  }
+  #  else
+  #  {
+  #    afg[i, term] <- 0
+  #  }
+  #}
   
   # Visualize events using Mike's approach.
   longitude <- with(subset(afg, get(term) == 1), Longitude)
