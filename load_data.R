@@ -128,10 +128,10 @@ afg.sett$vjust <- vjust
 # save files to speed up life
 afg.data = list(
     data = afg,
-    #outline = afg.outline, 
-    #admin = afg.shp,
-    #road = afg.road,
-    #ringroad = ringroad,
+    outline = afg.outline, 
+    admin = afg.shp,
+    road = afg.road,
+    ringroad = ringroad,
     sett = afg.sett
 )
 # convert Type to a factor so that ggplot behaves when animating
