@@ -31,7 +31,6 @@ shape.files<-"shapefiles/"
 # This will take several seconds on most laptops
 cat("reading data\n")
 afg<-read.csv("afg.csv", stringsAsFactors=FALSE)
-afg<-read.csv("afg.csv",stringsAsFactors=FALSE)
 
 # Add header data leftout by WikiLeaks, label reference taken from http://wardiary.wikileaks.org/
 colnames(afg)<-c("ReportKey","DateOccurred","Type","Category","TrackingNumber",
@@ -95,6 +94,7 @@ if (file.exists('distances.Rsave')) {
   load('distances.Rsave')
   afg$distToRoad <- distances
 } else {
+    cat('generating road distances')
   source("wikileaks_road_distance.R")
 }
 
@@ -103,14 +103,35 @@ afg.sett <- readShapePoints("shapefiles/points/settlements/07_03_settlements.shp
 # pick out capital and major cities
 sett.flag = (afg.sett$TYPE==3) | (afg.sett$TYPE==2)
 afg.sett <- afg.sett[sett.flag,]
-
+# these are hand chosen offsets so we can see the settlement names better
+offsets <- c('u','l','l','d','','d','','','l','','','','','l','','','','d',
+'','','d','d','','','','','','','','d','','')
+hjust = c()
+vjust = c()
+for (o in offsets){
+    if (o=='l'){
+        hjust = c(hjust,1.1)
+        vjust = c(vjust,-0.1)
+    } else if (o=='d'){
+        hjust = c(hjust,-0.1)
+        vjust = c(vjust,1.1)
+    } else if (o=='u'){
+        hjust = c(hjust,-0.1)
+        vjust = c(vjust,-0.2)
+    } else {
+        hjust = c(hjust,-0.1)
+        vjust = c(vjust,-0.1)
+    }
+}
+afg.sett$hjust <- hjust
+afg.sett$vjust <- vjust
 # save files to speed up life
 afg.data = list(
     data = afg,
-    outline = afg.outline, 
-    admin = afg.shp,
-    road = afg.road,
-    ringroad = ringroad,
+    #outline = afg.outline, 
+    #admin = afg.shp,
+    #road = afg.road,
+    #ringroad = ringroad,
     sett = afg.sett
 )
 # convert Type to a factor so that ggplot behaves when animating

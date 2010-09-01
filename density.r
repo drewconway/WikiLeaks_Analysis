@@ -2,7 +2,6 @@ library(ggplot2)
 library(spatstat)
 library(maptools)
 
-
 # set frames_dir to a place where you will store 2K+ pngs
 frames_dir = "/Users/mike/Data/frames/"
 
@@ -10,6 +9,10 @@ frames_dir = "/Users/mike/Data/frames/"
 load("afg.data") # afg.data
 afg = afg.data
 afg$data$Type = factor(afg$data$Type)
+
+# let's only look at one type of event
+l = "Explosive Hazard"
+afg$data = afg$data[afg$data$Type==l,]
 
 # we need to set this as the polygon files we've got have some overlaps
 spatstat.options(checkpolygons = FALSE) 
@@ -35,15 +38,14 @@ now = t[1]                  # seconds since unix_start
 num_days = round(t[length(t)]-now) / day_duration # how many actual days we have
 one_month = day_duration * 31 # this is our time window
 
-# let's only look at one type of event
-l = "Explosive Hazard"
-afg$data = afg$data[afg$data$Type==l,]
-
 # upper and lower limits
 cmax = 10
 cmin = 0
 
-for (day in seq(num_days)){
+# test 2009
+now = now + (one_month * 12 * 5)
+
+for (day in seq(10)){
     # figure out which points we want to smooth over for this day
     time.flags = (t > (now - one_month)) & (t < now)
     #today.flags = (t > now-(2*day_duration)) & (t < now+(2*day_duration))
@@ -84,7 +86,7 @@ for (day in seq(num_days)){
     p = p + scale_fill_gradient(
         "Intensity",
         low="white",
-        high="tomato1",
+        high="blue",
         limits=c(cmin, cmax),
         legend=FALSE # the legend is a bit hard to interpret
     )
@@ -125,12 +127,14 @@ for (day in seq(num_days)){
     df.date = data.frame(x=70,y=30,t=format(now.posix,"%B %Y"))
     p = p + geom_text(data = df.date, aes(x=x, y=y, label=t), hjust=0)
     # add the place names
-    p = p + geom_text(
-        data = sett, 
-        aes(x=x, y=y, label=name, size=4, legend=FALSE),
-        hjust = -0.1,
-        vjust = -0.1
-    )
+    for (i in seq(nrow(sett))){
+        p = p + geom_text(
+            data = sett[i,], 
+            aes(x=x, y=y, label=name, size=4, legend=FALSE),
+            hjust = sett[i,]$hjust,
+            vjust = sett[i,]$vjust
+        )
+    }
     p = p + geom_point(data = sett, aes(x=x, y=y), legend=FALSE)
     # save the plot
     cat(paste("processing frame",day,"\n\t"))

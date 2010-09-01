@@ -13,7 +13,7 @@
 # For more information on FreeBSD see: http://www.opensource.org/licenses/bsd-license.php
 # All rights reserved.                                                         
 
-source("load_data.R")
+#source("load_data.R")
 
 polyline2df <- function(m) {
   # the df will be rows(m)-1 rows long
