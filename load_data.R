@@ -30,12 +30,15 @@ shape.files<-"shapefiles/"
 
 # This will take several seconds on most laptops
 cat("reading data\n")
-afg<-read.csv("afg.csv",stringsAsFactors=FALSE)
+afg<-read.csv("afg.csv", stringsAsFactors=FALSE)
 
 # Add header data leftout by WikiLeaks, label reference taken from http://wardiary.wikileaks.org/
-colnames(afg)<-c("ReportKey","DateOccurred","Type","Category","TrackingNumber","Title","Summary","Region","AttackOn",
-    "ComplexAttack","ReportingUnit","UnitName","TypeOfUnit","FriendlyWIA","FriendlyKIA","HostNationWIA","HostNationKIA",
-    "CivilianWIA","CivilianKIA","EnemyWIA","EnemyKIA","EnemyDetained","MGRS","Latitude","Longitude","OriginatorGroup",
+colnames(afg)<-c("ReportKey","DateOccurred","Type","Category","TrackingNumber",
+    "Title","Summary","Region","AttackOn",
+    "ComplexAttack","ReportingUnit","UnitName","TypeOfUnit","FriendlyWIA",
+    "FriendlyKIA","HostNationWIA","HostNationKIA",
+    "CivilianWIA","CivilianKIA","EnemyWIA","EnemyKIA","EnemyDetained","MGRS",
+    "Latitude","Longitude","OriginatorGroup",
     "UpdatedByGroup","CCIR","Sigact","Affiliation","DColor","Classification")
 
 cat("converting date\n")    
@@ -84,4 +87,26 @@ trace(".shp2LinesDF",
 afg.road <- readShapeLines(paste(shape.files,"roads/roads-all.shp",sep=""))
 #road.poly<-fortify.Lines(afg.road)
 ringroad <- afg.road[afg.road$CLASS==1, ]
+
+# Settlements
+afg.sett <- readShapePoints("shapefiles/points/settlements/07_03_settlements.shp") 
+# pick out capital and major cities
+sett.flag = (afg.sett$TYPE==3) | (afg.sett$TYPE==2)
+afg.sett <- afg.sett[sett.flag,]
+# save files to speed up life
+afg.data = list(
+    data = afg,
+    outline = afg.outline, 
+    admin = afg.shp,
+    road = afg.road,
+    ringroad = ringroad,
+    sett = afg.sett
+)
+# convert Type to a factor so that ggplot behaves when animating
+afg.data$data$Type[afg.data$data$Type==""] = "Other"
+afg.data$data$Type[afg.data$data$Type=="Counter Insurgency"] = "Counter-Insurgency"
+afg.data$data$Type[afg.data$data$Type=="Enemy"] = "Enemy Action"
+afg.data$data$Type = factor(afg.data$data$Type)
+save(afg.data, file="afg.data")
+
 
