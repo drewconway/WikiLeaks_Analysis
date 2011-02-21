@@ -2,3 +2,14 @@
 .DS_Store
 database.yml
 images/terms
+
+# LaTeX auxiliary files
+*.aux
+*.log
+*.nav
+*.out
+*.pdf
+*.pdfsync
+*.snm
+*.toc
+*.vrb
