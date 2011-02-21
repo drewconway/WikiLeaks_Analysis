@@ -63,41 +63,21 @@ has.cntr[grep("contractor",afg$Summary,fixed=FALSE,ignore.case=TRUE)]<-TRUE
 
 # Add new columns to afg dataframe
 afg<-transform(afg,AllKIA=all.kia,AllWIA=all.wia,AllCasualty=all.cas,Year=year,HasCntr=has.cntr)
-    
-# Create some useful unit subsets for the time-series analysis
-cjtf82<-subset(afg,afg$ReportingUnit=="CJTF-82")
-paladin<-subset(afg,afg$ReportingUnit=="TF PALADIN LNO")
-cjsotf<-subset(afg,afg$ReportingUnit=="CJSOTF-A")
 
-cat("reticulating splines\n")
 # Load shapefiles
 # Afghanistan adminstrative file
+afg.shp <- readShapePoly(paste(shape.files,"admin/admin3_poly_32.shp",sep=""))
+afg.poly <- fortify.SpatialPolygons(afg.shp)
 
-#afg.shp <- readShapePoly(paste(shape.files,"admin/admin3_poly_32.shp",sep=""))
-#afg.poly <- fortify.SpatialPolygons(afg.shp)
 
-#afg.outline <- readShapePoly(paste(shape.files,"boundary/admin1_poly_32.shp",sep=""))
-#intl.poly<-fortify.SpatialPolygons(afg.outline)
+# rough lat/lon limits of Afghanistan:
+max_lat = max(afg.poly$lat)
+min_lat = min(afg.poly$lat)
+max_lon = max(afg.poly$lon)
+min_lon = min(afg.poly$lon)
 
-# Road files
-# OK, there's some bad data in these shape files that triggers a bug in
-# maptools. This works around it.
-#trace(".shp2LinesDF",
-#  quote({good <- (df$LENGTH_ != 0); df <- df[good, ]; shapes <- shapes[good] }),
-#  at=7,
-#  print=FALSE,
-#  where=readShapeLines)
+# filter out events not in Afghanistan (?!)
+afg_boundary<-subset(afg, Latitude>=min_lat & Latitude<=max_lat & Longitude>=min_lon & Longitude<=max_lon)
 
-#afg.road <- readShapeLines(paste(shape.files,"roads/roads-all.shp",sep=""))
-#road.poly<-fortify.Lines(afg.road)
-#ringroad <- afg.road[afg.road$CLASS==1, ]
-
-# get the distances to the road, either by loading it from a file or running
-# a (long!) script
-#if (file.exists('distances.Rsave')) {
-#  load('distances.Rsave')
-#  afg$distToRoad <- distances
-#} else {
-#  source("wikileaks_road_distance.R")
-#}
-
+# Subset of only IED events
+afg_ied<-subset(afg_boundary, Type=="Explosive Hazard")

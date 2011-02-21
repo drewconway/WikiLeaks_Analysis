@@ -65,6 +65,8 @@ capital.count<-ddply(topic.capital,.(Word,Year),nrow)
 topic.other<-subset(topic.df,topic.df$Region!="RC CAPITAL" & topic.df$Region!="UNKNOWN")
 other.count<-ddply(topic.other,.(Word,Year,Region),nrow)
 
+all.count<-ddply(topic.other,.(Word,Region),nrow)
+
 ## Visualization
 
 # Create regional boundaries using (min_lat,min_long,max_lat,max_long)
@@ -192,6 +194,14 @@ for(y in years){
         grid.layout[[paste(y,"-",r,sep="")]]<-cbind(grid,r,y)
     }
 }
+
+all.grid<-list()
+for(r in regions){
+    region.rows<-nrow(subset(all.count,all.count$Region==r))
+    grid<-do.call(grid.switch[[r]],list(region.rows))
+    all.grid[[r]]<-cbind(grid,r)
+}
+
 # Clean and organize grid layouts
 grid.layout<-as.data.frame(do.call(rbind,grid.layout),stringsAsFactors=FALSE)
 names(grid.layout)<-c("grid.long","grid.lat","Region","Year")
@@ -201,11 +211,20 @@ grid.layout$Year<-as.factor(grid.layout$Year)
 grid.layout$Region<-as.factor(grid.layout$Region)
 grid.layout<-grid.layout[with(grid.layout,order(Year,Region)),] # Sort by year and region
 
+all.layout<-as.data.frame(do.call(rbind,all.grid),stringsAsFactors=FALSE)
+names(all.layout)<-c("grid.long","grid.lat","Region")
+all.layout$Region<-as.factor(all.layout$Region)
+all.layout$grid.long<-as.numeric(all.layout$grid.long)
+all.layout$grid.lat<-as.numeric(all.layout$grid.lat)
+
 # Add to df
 other.final<-transform(other.count,rand.long=rand.points[,1],rand.lat=rand.points[,2])
 row.names(grid.layout)<-row.names(other.final[with(other.final,order(Year,Region)),]) # Add corresponding row names for merge
 # Final merge
 other.final<-merge(other.final,grid.layout,by=c("row.names","Year","Region"))
+
+row.names(all.layout)<-row.names(all.count[with(all.count,order(Region)),])
+all.final<-merge(all.count,all.layout,by=c("row.names","Region"))
 
 # Plot topics by year in region 
 region.colours<-c("RC SOUTH"="darkred","RC NORTH"="darkblue","RC EAST"="darkgreen","RC WEST"="darkviolet")
@@ -225,3 +244,11 @@ topic.grid<-topic.grid+geom_path(data=intl.poly,aes(x=long,y=lat,group=group,alp
     scale_colour_manual(value=region.colours)+scale_x_continuous(breaks=NA)+scale_y_continuous(breaks=NA)+
     xlab("")+ylab("")+opts(title="LDA Topic Models for WikiLeaks Report Summaries from\nFour Regions, by Year, Projected onto Map and Sized by Frequency")
 ggsave(topic.grid,filename="images/topic_model_map_grid.png",width=12,height=7.5,dpi=300)
+
+all.grid<-ggplot(all.final,aes(x=grid.long,y=grid.lat))+geom_text(aes(label=Word,size=as.factor(V1),colour=Region,alpha=0.7))
+all.grid<-all.grid+geom_path(data=intl.poly,aes(x=long,y=lat,group=group,alpha=0.5))+coord_map()+theme_bw()+
+    scale_alpha(to=c(0.4,0.6),legend=FALSE)+scale_size_manual(values=2:7,name="Word Frequency")+
+    scale_colour_manual(value=region.colours)+scale_x_continuous(breaks=NA)+scale_y_continuous(breaks=NA)+
+    xlab("")+ylab("")+opts(title="LDA Topic Models for WikiLeaks Report Summaries from\nFour Regions, by Year, Projected onto Map and Sized by Frequency")
+ggsave(all.grid,filename="images/topic_model_map_grid_all.png",width=10,height=12,dpi=300)
+

@@ -67,12 +67,14 @@ colnames(region.dcount)<-c("YearWeek","Region", "ReportCount")
 region.subs<-lapply(unique(region.dcount$Region), function(r) cbind(table(sapply(subset(region.dcount,region.dcount$Region==r)$ReportCount,leading.dig)),as.character(r)))
 region.subs[[6]]<-rbind(region.subs[[6]],c(0,"UNKNOWN"),c(0,"UNKNOWN")) # Add missing values
 region.subs<-lapply(region.subs,function(x) {as.data.frame(x,row.names=1:9,stringsAsFactors=F)})
+
 # Combine that into a single data frame
 region.subs<-list_to_dataframe(region.subs)
 region.subs<-transform(region.subs,V3=rep(1:9,6))
 colnames(region.subs)<-c("DigitCount","Region","Digit")
 region.subs$DigitCount<-as.numeric(region.subs$DigitCount)
 region.subs$Digit<-as.numeric(region.subs$Digit)
+
 # Finally, add sums for facet_wrap
 dig.sums<-sapply(unique(region.subs$Region),function(r) sum(subset(region.subs,Region==r)$DigitCount),USE.NAMES=F)
 sum.vec<-unlist(lapply(dig.sums,function(x) {rep(x,9)}))
