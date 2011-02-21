@@ -1,0 +1,4 @@
+\frametitle {Results 2 -- by region}
+    \begin{center}
+        \includegraphics[width=10cm]{benford_region.png}
+    \end{center}
