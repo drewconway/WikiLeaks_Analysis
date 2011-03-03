@@ -32,10 +32,10 @@ dev.off()
 
 # New plot with regional map of Afghanistan overlayed on attack data
 png("images/events_by_year_map.png",width=1200,height=750,res=100)
-year.map<-ggplot(afg_ts,aes(y=lat,x=lon))+geom_point(aes(colour=type,alpha=0.4))+facet_wrap(~year)
-year.map<-year.map+geom_path(data=afg.poly,aes(y=lat,x=long,group=group,alpha=0.4))+
-    scale_x_continuous(breaks=NA)+scale_y_continuous(breaks=NA)+scale_alpha(legend=FALSE)+
-    opts(title="Wikileaks Geospatial Attack Data by Year and Type (Afghanistan District Boundaries)",panel.grid.major=theme_blank())+
+year.map<-ggplot(subset(afg_ts,type=="ENEMY_Explosive Hazard"),aes(y=lat,x=lon))+geom_point(aes(colour="darkblue",alpha=0.45,size=1))+facet_wrap(~year)
+year.map<-year.map+geom_path(data=intl.poly,aes(y=lat,x=long,group=group))+
+    scale_x_continuous(breaks=NA)+scale_y_continuous(breaks=NA)+scale_alpha(legend=FALSE)+scale_colour_manual(values=c("darkblue"="darkblue"),legend=FALSE)+scale_size_continuous(legend=FALSE)+
+    opts(title="Wikileaks Geospatial Enemy Explosize Hazard Data by Year",panel.grid.major=theme_blank())+
     theme_bw()+ylab("Latitude")+xlab("Longitude")+coord_map()
 print(year.map)
 dev.off()
