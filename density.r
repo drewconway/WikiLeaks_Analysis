@@ -2,6 +2,8 @@ library(ggplot2)
 library(spatstat)
 library(maptools)
 
+source('plot_utils.r')
+
 # set frames_dir to a place where you will store 2K+ pngs
 frames_dir = "/Users/mike/Data/frames/"
 
@@ -27,7 +29,10 @@ fortified.admin = fortify.SpatialPolygons(afg$admin)
 sett = data.frame(
     x=afg$sett$LON,
     y=afg$sett$LAT,
-    name=as.character(afg$sett$NAME)
+    name=as.character(afg$sett$NAME),
+    hjust=afg$sett$hjust,
+    vjust=afg$sett$vjust,
+    stringsAsFactors=FALSE
 )
 # extract time in a usable format
 t = unclass(as.POSIXct.Date(afg$data$DateOccurred))
@@ -37,15 +42,13 @@ day_duration = 60 * 60 * 24 # seconds
 now = t[1]                  # seconds since unix_start
 num_days = round(t[length(t)]-now) / day_duration # how many actual days we have
 one_month = day_duration * 31 # this is our time window
-
+days = seq(t[1],t[length(t)],day_duration) # this is the time stamp of each day
 # upper and lower limits
 cmax = 10
 cmin = 0
 
-# test 2009
-now = now + (one_month * 12 * 5)
-
-for (day in seq(10)){
+do_plot <- function(now){
+    day = (now - t[1])/day_duration
     # figure out which points we want to smooth over for this day
     time.flags = (t > (now - one_month)) & (t < now)
     #today.flags = (t > now-(2*day_duration)) & (t < now+(2*day_duration))
@@ -86,32 +89,17 @@ for (day in seq(10)){
     p = p + scale_fill_gradient(
         "Intensity",
         low="white",
-        high="blue",
+        high="cornflowerblue",
         limits=c(cmin, cmax),
         legend=FALSE # the legend is a bit hard to interpret
     )
-    # add afghanistan boundary
-    #p = p + geom_path(
-    #    data=fortified.outline,  
-    #    aes(y=lat,x=long,group=group), 
-    #    size=1
-    #)
-    # add afghanistan administration boundaries
-    #p = p + geom_path(
-    #    data=fortified.admin,  
-    #    aes(y=lat,x=long,group=group), 
-    #    size=0.1
-    #)
-    # add roads
-    p = p + geom_path(
-        data=fortified.roads, 
-        aes(y=lat,x=long,group=group), 
-        size=1)
-    p = p + geom_path(
-        data=fortified.roads,    
-        aes(y=lat,x=long,group=group), 
-        size=0.5, 
-        colour="white"
+    # this adds outlines, roads etc and is controlled in plot_utils.r
+    p <- add_afghanistan(
+        p,
+        fortified.outline,
+        fortified.admin,
+        fortified.roads,
+        sett
     )
     # add points, coloured by type
     #p = p + geom_point(
@@ -125,19 +113,8 @@ for (day in seq(10)){
     # add the month and year
     now.posix = as.POSIXct(now,origin=unix_start)
     df.date = data.frame(x=70,y=30,t=format(now.posix,"%B %Y"))
-    p = p + geom_text(data = df.date, aes(x=x, y=y, label=t), hjust=0)
-    # add the place names
-    for (i in seq(nrow(sett))){
-        p = p + geom_text(
-            data = sett[i,], 
-            aes(x=x, y=y, label=name, size=4, legend=FALSE),
-            hjust = sett[i,]$hjust,
-            vjust = sett[i,]$vjust
-        )
-    }
-    p = p + geom_point(data = sett, aes(x=x, y=y), legend=FALSE)
+    p = p + geom_text(data = df.date, aes(x=x, y=y, label=t), hjust=0,legend=FALSE)
     # save the plot
-    cat(paste("processing frame",day,"\n\t"))
     ggsave(
         filename=paste(frames_dir,'afghanistan_',day,'.png',sep=""), 
         plot=p,
@@ -146,6 +123,11 @@ for (day in seq(10)){
         dpi=72
     )
 }
+
+cat('generating frames')
+aaply(days,1,do_plot,.progress='text')
+
+
 
 # run this command to join the files (replacing the path as necessary)
 # ffmpeg -f image2 -r 20 -i ~/Data/frames/afghanistan_%d.png -b 600k afghanistan.mp4

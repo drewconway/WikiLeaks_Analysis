@@ -45,15 +45,15 @@ create.lda<-function(afg.df, num.topics=3, num.words=10, stemming=FALSE, stopwor
 }
 
 ## Only run this portion if you have not yet generated LDA
-afg.terms<-create.lda(afg,stopwords=c(stopwords("english"),"report","reported","reports","report)","(delayed","(s//rel","rocket,","gctf)","(s)","(fouo)","(s//rel)"))
+#afg.terms<-create.lda(afg,stopwords=c(stopwords("english"),"report","reported","reports","report)","(delayed","(s//rel","rocket,","gctf)","(s)","(fouo)","(s//rel)"))
 
 # Create proper topic dataframe
-topic.df<-melt(afg.terms)
-topic.df<-topic.df[,2:5]
+#topic.df<-melt(afg.terms)
+#topic.df<-topic.df[,2:5]
 # Strip ID column and rename
-topic.df[,1]<-as.numeric(gsub("Topic ","",topic.df[,1]))    # Remove 'Topic ' from leading column
-names(topic.df)<-c("TopicID","Word","Region","Year")
-write.csv(topic.df,"afg_topic.csv")
+#topic.df[,1]<-as.numeric(gsub("Topic ","",topic.df[,1]))    # Remove 'Topic ' from leading column
+#names(topic.df)<-c("TopicID","Word","Region","Year")
+#write.csv(topic.df,"afg_topic.csv")
 
 # Load saved LDA topic data
 topic.df<-read.csv("afg_topic.csv",stringsAsFactors=FALSE)
@@ -72,10 +72,10 @@ south.boundary<-c(32,61,32,70)
 north.boundary<-c(36,64,36,74)
 ew.boundary<-c(36,66,32,66)
 # rough lat/lon limits of Afghanistan:
-max_lat<-max(afg.poly$lat)
-min_lat<-min(afg.poly$lat)
-max_lon<-max(afg.poly$lon)
-min_lon<-min(afg.poly$lon)
+max_lat = max(afg.poly$lat)
+min_lat = min(afg.poly$lat)
+max_lon = max(afg.poly$long)
+min_lon = min(afg.poly$long)
 
 # Random point generators for regions
 reast<-function() {
@@ -183,7 +183,7 @@ rand.points<-do.call(rbind,rand.points)
 
 # Create grid word points in regions
 years<-as.factor(unique(other.count$Year))
-regions<-levels(other.count$Region)
+regions<-unique(other.count$Region)
 grid.layout<-list()
 for(y in years){
     for(r in regions){
@@ -219,7 +219,7 @@ topic.rand<-topic.rand+geom_path(data=intl.poly,aes(x=long,y=lat,group=group,alp
 ggsave(topic.rand,filename="images/topic_model_map_rand.png",width=12,height=7.5,dpi=300)
 
 # Grid word placement
-topic.grid<-ggplot(other.final,aes(x=grid.long,y=grid.lat))+geom_text(aes(label=Word,size=as.factor(V1),colour=Region,alpha=0.7))+facet_wrap(~Year)
+topic.grid<-ggplot(other.final,aes(x=grid.long,y=grid.lat))+geom_text(aes(label=Word,size=as.factor(V1),colour=Region,alpha=0.7))#+facet_wrap(~Year)
 topic.grid<-topic.grid+geom_path(data=intl.poly,aes(x=long,y=lat,group=group,alpha=0.5))+coord_map()+theme_bw()+
     scale_alpha(to=c(0.4,0.6),legend=FALSE)+scale_size_manual(values=2:7,name="Word Frequency")+
     scale_colour_manual(value=region.colours)+scale_x_continuous(breaks=NA)+scale_y_continuous(breaks=NA)+

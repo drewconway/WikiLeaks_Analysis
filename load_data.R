@@ -132,7 +132,8 @@ afg.data = list(
     admin = afg.shp,
     road = afg.road,
     ringroad = ringroad,
-    sett = afg.sett
+    sett = afg.sett,
+    distToRoad = afg$distToRoad
 )
 # convert Type to a factor so that ggplot behaves when animating
 afg.data$data$Type[afg.data$data$Type==""] = "Other"
