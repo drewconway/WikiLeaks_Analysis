@@ -35,7 +35,7 @@ shape.files<-"shapefiles/"
 
 # This will take several seconds on most laptops
 cat("reading data\n")
-afg<-read.csv("~/Dropbox/Wikileaks_project/Wikidata/afg.csv",stringsAsFactors=FALSE)
+afg<-read.csv("/Users/mike/Dropbox/Projects/WikiLeaks_Analysis/Wikidata/afg.csv",stringsAsFactors=FALSE)
 
 # Add header data leftout by WikiLeaks, label reference taken from http://wardiary.wikileaks.org/
 colnames(afg)<-c("ReportKey","DateOccurred","Type","Category","TrackingNumber","Title","Summary","Region","AttackOn",
