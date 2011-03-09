@@ -337,7 +337,7 @@
   \frametitle{Summer Violence across the World}
   \begin{itemize}
     \item{Well-known studies show increased violence during the summer across the world}
-    \item{In Afghanistan, summer is officially declared as the fighting season}
+    \item{In Afghanistan, summer is officially declared to be the fighting season}
     \item{In Britain, injuries and deaths from violence peak during the summer}
     \item{In Norway, the length of day correlates with increased violence}
     \item{In Africa, there are (disputed) claims that hotter climates are associated with greater incidence of war}
@@ -445,7 +445,9 @@
 \end{frame}
 
 \begin{frame}[fragile]
-  TOPIC PLOT GOES HERE
+  \begin{center}
+    \includegraphics[width = 0.7\textwidth]{topic_models.png}
+  \end{center}
 \end{frame}
 
 \begin{frame}
@@ -461,24 +463,33 @@
   \frametitle{Outlier Analysis}
   
   \begin{itemize}
-    \item{Take a standard English corpus: here, we'll use Wikipedia.}
+    \item{Take a standard English corpus such as Wikipedia}
     \item{Compare frequency of words in Wikileaks data against frequency of words in normal English}
-    \item{From words that are unusually frequent in Wikileaks text, select most interesting few}
+    \item{Select words that are unusually frequent in Wikileaks text and pick the most interesting few}
     \item{Visualize}
   \end{itemize}
 \end{frame}
 
 \begin{frame}
-  OUTLIER WORDS PLOTS GO HERE
+  \begin{center}
+    \includegraphics[width = 0.66\textwidth]{children.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \begin{center}
+    \includegraphics[width = 0.66\textwidth]{sniper.png}
+  \end{center}
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{What's Left to Do?}
   
   \begin{itemize}
-    \item{Generated lots of maps of Afghanistan showing topics, special words, etc., etc.}
-    \item{But would like something that combines the spatial information of a map with the temporal information we saw in earlier plots}
-    \item{How? Build an animation}
+    \item{Generated lots of maps of Afghanistan showing topics, outlier words, etc., etc.}
+    \item{But we'd like something that combines the spatial information of a map with the temporal information we saw in earlier plots}
+    \item{How?}
+    \item{Build an animation}
   \end{itemize}
 \end{frame}
 
@@ -486,8 +497,8 @@
   \frametitle{Building an Animation}
   
   \begin{itemize}
-    \item{Use a mathematical model to smooth data within 3 month bins, shift bin forward day by day}
-    \item{Generate image for every bin}
+    \item{Use a mathematical model to smooth spatial data within 3 month bins}
+    \item{Generate one image for each bin; one bin per day}
     \item{Use ffmpeg to compile images into an animation}
   \end{itemize}
 \end{frame}
