@@ -81,7 +81,7 @@
 \begin{frame}
 	\frametitle{Wikileaks}
 	\begin{center}
-    \includegraphics[height=0.8\textheight]{wikileaks_eggtimer.png}
+   % \includegraphics[height=0.8\textheight]{wikileaks_eggtimer.png}
     \end{center}
 \end{frame}
 
@@ -141,7 +141,7 @@
 \begin{frame}
     \frametitle{Scrub}
     \begin{center}
-    \includegraphics[width=0.5\textwidth]{pickaxe.png}
+   % \includegraphics[width=0.5\textwidth]{pickaxe.png}
     \end{center}
 \end{frame}
 
@@ -321,5 +321,179 @@
 
 % section checking_the_data (end)
 
+\section{Other analyses} % (fold)
+\label{sec:other_analyses}
+
+\begin{frame}[fragile]
+  \frametitle{Seasonality}
+  \begin{center}
+    \includegraphics[width = 8.5cm]{time_course.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Seasonal Trend}
+  \begin{itemize}
+    \item{We see a clear seasonal trend with peaks of activity repeating midway through each year}
+    \item{Why is this not surprising?}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Summer Violence across the World}
+  \begin{itemize}
+    \item{Well-known results showing increased violence during the summer}
+    \item{In Britain, injuries and deaths from violence peak during the summer}
+    \item{In Africa, there are (disputed) claims that hotter climates are associated with greater incidence of war}
+    \item{In Norway, the length of day correlates with increased violence}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Afghanistan's Climate}
+  \begin{itemize}
+    \item{Afghanistan is a mountainous country with harsh winters}
+    \item{Average Winter Temperature}
+    \item{Average Summer Temperature}
+  \end{itemize}
+\end{frame}
+
+%http://www.independent.co.uk/news/uk/this-britain/violence-prone-to-seasonal-variations-693678.html
+%http://www.rockefellerfoundation.org/uploads/files/526ba3ae-0123-4b9e-b955-f952be8a40bc-warming.pdf
+%http://www.ncbi.nlm.nih.gov/pubmed/11007723
+%http://www.nytimes.com/2010/01/12/world/asia/12afghan.html
+
+\begin{frame}[fragile]
+  \frametitle{Cautious Interpretation}
+  \begin{itemize}
+    \item{But we should be cautious about interpreting this relationship as a causal process}
+    \item{In the U.S., ice cream sales go up at the time of year that crime rates go up}
+    \item{But ice cream doesn't seem to cause crime}
+    \item{All we know is that hot weather is associated with increased violence across the world}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Text Analysis}
+  
+  \begin{itemize}
+    \item{Every event in the Wikileaks data has an ad hoc text summary associated with it}
+    \item{We conducted two types of text analysis}
+    \item{Clustering similar types of events using LDA}
+    \item{Identifying what makes Wikileaks text different from normal English text}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{LDA}
+  \begin{itemize}
+    \item{LDA stands for Latent Dirichlet Allocation}
+    \item{LDA provides a fully automatic method for clustering documents into N categories}
+    \item{Categories are called topics and are characterized by the words that commonly occur in documents belonging to that topic}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{LDA Example}
+  \begin{itemize}
+    \item{The best example of LDA's output is the categorization of scientific articles}
+    \item{Blei et al. analyzed the corpus of Science magazine between 1880 and 2002}
+    \item{LDA extracts interpretable and prima facie appropriate topics}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \begin{center}
+    \begin{tabular}{cccc}
+      human & evolution & disease & computer \\
+      genome & evolutionary & host & models \\
+      dna & species & bacteria & information \\
+      genetic & organisms & diseases & data \\
+      genes & life & resistance & computers \\
+      sequence & origin & bacterial & system \\
+      gene & biology & new & network \\
+      molecular & groups & strains & systems \\
+      sequencing & phylogenetic & control & model \\
+      map & living & infectious & parallel \\
+      information & diversity & malaria & methods \\
+      genetics & group & parasite & networks \\
+      mapping & new & parasites & software \\
+      project & two & united & new \\
+      sequences & common & tuberculosis & simulations \\
+    \end{tabular}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{LDA Details}
+  
+  \begin{itemize}
+    \item{For more (technical) details, see 
+\href{http://www.cs.princeton.edu/$\sim$blei/modeling-science.pdf}{http://www.cs.princeton.edu/$\sim$blei/modeling-science.pdf}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{LDA and the Wikileaks Data}
+  
+  \begin{itemize}
+    \item{Use the summary text for each event}
+    \item{Assume that there are 10 topics}
+    \item{Extract words that characterize each topic}
+    \item{Plots words for topics over regions with high frequency of that topic}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  TOPIC PLOT GOES HERE
+\end{frame}
+
+\begin{frame}
+  \frametitle{Outlier Words}
+  
+  \begin{itemize}
+    \item{LDA groups the events in the Wikileaks data based on their summaries}
+    \item{But what makes the Wikileaks data different from other text?}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Outlier Analysis}
+  
+  \begin{itemize}
+    \item{Take a standard English corpus: here, we'll use Wikipedia.}
+    \item{Compare frequency of words in Wikileaks data against frequency of words in normal English}
+    \item{From words that are unusually frequent in Wikileaks text, select most interesting few}
+    \item{Visualize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  OUTLIER WORDS PLOTS GO HERE
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{What's Left to Do?}
+  
+  \begin{itemize}
+    \item{Generated lots of maps of Afghanistan showing topics, special words, etc., etc.}
+    \item{But would like something that combines the spatial information of a map with the temporal information we saw in earlier plots}
+    \item{How? Build an animation}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Building an Animation}
+  
+  \begin{itemize}
+    \item{Use a mathematical model to smooth data within 3 month bins, shift bin forward day by day}
+    \item{Generate image for every bin}
+    \item{Use ffmpeg to compile images into an animation}
+  \end{itemize}
+\end{frame}
+
+% SHOW ANIMATION AS SEPARATE VIDEO
+
+% section other_analyses (end)
 
 \end{document}
