@@ -329,17 +329,18 @@
   \frametitle{Seasonal Trend}
   \begin{itemize}
     \item{We see a clear seasonal trend with peaks of activity repeating midway through each year}
-    \item{Why is this not surprising?}
+    \item{Why is this reasonable to expect?}
   \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Summer Violence across the World}
   \begin{itemize}
-    \item{Well-known results showing increased violence during the summer}
+    \item{Well-known studies show increased violence during the summer across the world}
+    \item{In Afghanistan, summer is officially declared as the fighting season}
     \item{In Britain, injuries and deaths from violence peak during the summer}
-    \item{In Africa, there are (disputed) claims that hotter climates are associated with greater incidence of war}
     \item{In Norway, the length of day correlates with increased violence}
+    \item{In Africa, there are (disputed) claims that hotter climates are associated with greater incidence of war}
   \end{itemize}
 \end{frame}
 
@@ -347,8 +348,8 @@
   \frametitle{Afghanistan's Climate}
   \begin{itemize}
     \item{Afghanistan is a mountainous country with harsh winters}
-    \item{Average Winter Temperature}
-    \item{Average Summer Temperature}
+    \item{Winter Temperatures: $\sim$ -10 F}
+    \item{Summer Temperatures: $\sim$ 122 F}
   \end{itemize}
 \end{frame}
 
@@ -357,24 +358,26 @@
 %http://www.ncbi.nlm.nih.gov/pubmed/11007723
 %http://www.nytimes.com/2010/01/12/world/asia/12afghan.html
 
-\begin{frame}[fragile]
-  \frametitle{Cautious Interpretation}
-  \begin{itemize}
-    \item{But we should be cautious about interpreting this relationship as a causal process}
-    \item{In the U.S., ice cream sales go up at the time of year that crime rates go up}
-    \item{But ice cream doesn't seem to cause crime}
-    \item{All we know is that hot weather is associated with increased violence across the world}
-  \end{itemize}
-\end{frame}
+%\begin{frame}[fragile]
+%  \frametitle{Cautious Interpretation}
+%  \begin{itemize}
+%    \item{But we should be cautious about interpreting this relationship as a causal process}
+%    \item{In the U.S., ice cream sales go up during the summer, the same time of year when the crime rate goes up}
+%    \item{But we don't think that ice cream causes crime}
+%    \item{Observing a pattern is not the same thing as understanding its origins}
+%  \end{itemize}
+%\end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Text Analysis}
   
   \begin{itemize}
-    \item{Every event in the Wikileaks data has an ad hoc text summary associated with it}
-    \item{We conducted two types of text analysis}
-    \item{Clustering similar types of events using LDA}
-    \item{Identifying what makes Wikileaks text different from normal English text}
+    \item{Every event in the Wikileaks data set has an ad hoc text summary}
+    \item{We conducted two types of text analysis:}
+    \begin{enumerate}
+      \item{Grouping similar types of events using LDA}
+      \item{Identifying what makes Wikileaks text different from normal English text using outlier words}
+    \end{enumerate}
   \end{itemize}
 \end{frame}
 
@@ -382,21 +385,23 @@
   \frametitle{LDA}
   \begin{itemize}
     \item{LDA stands for Latent Dirichlet Allocation}
-    \item{LDA provides a fully automatic method for clustering documents into N categories}
-    \item{Categories are called topics and are characterized by the words that commonly occur in documents belonging to that topic}
+    \item{LDA provides a fully automatic method for clustering documents into categories}
+    \item{Categories are called topics and are characterized by a set of words that distinguish that topic from other topics}
   \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{LDA Example}
   \begin{itemize}
-    \item{The best example of LDA's output is the categorization of scientific articles}
+    \item{The classic example of LDA in action is the categorization of scientific articles}
     \item{Blei et al. analyzed the corpus of Science magazine between 1880 and 2002}
-    \item{LDA extracts interpretable and prima facie appropriate topics}
+    \item{LDA extracted interpretable topics matching subfields of science}
   \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
+  \frametitle{Four Topics from the Science Corpus}
+  
   \begin{center}
     \begin{tabular}{cccc}
       human & evolution & disease & computer \\
@@ -424,6 +429,7 @@
   \begin{itemize}
     \item{For more (technical) details, see 
 \href{http://www.cs.princeton.edu/$\sim$blei/modeling-science.pdf}{http://www.cs.princeton.edu/$\sim$blei/modeling-science.pdf}}
+    \item{Many R packages implement LDA, including ``LDA'' and ``topicmodels''}
   \end{itemize}
 \end{frame}
 
@@ -433,8 +439,8 @@
   \begin{itemize}
     \item{Use the summary text for each event}
     \item{Assume that there are 10 topics}
-    \item{Extract words that characterize each topic}
-    \item{Plots words for topics over regions with high frequency of that topic}
+    \item{Estimate topics for each region and each year separately}
+    \item{Make plots}
   \end{itemize}
 \end{frame}
 
